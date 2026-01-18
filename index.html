@@ -2,110 +2,128 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Aşk Bombası 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ Kalp Yağmuru</title>
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    background: pink;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
+body{
+  margin:0;
+  background:pink;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
 }
 
-button {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 26px;
-    padding: 20px 40px;
-    border: none;
-    border-radius: 40px;
-    background: hotpink;
-    color: white;
-    cursor: pointer;
-    z-index: 10;
+/* BAŞLANGIÇ */
+#start{
+  position:fixed;
+  inset:0;
+  background:rgba(255,192,203,.95);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
 }
 
-.heart {
-    position: absolute;
-    font-size: 60px;
-    cursor: pointer;
-    animation: fall linear;
+#start div{
+  background:white;
+  color:red;
+  font-size:40px;
+  padding:20px 40px;
+  border-radius:20px;
 }
 
-@keyframes fall {
-    from { transform: translateY(-80px); }
-    to { transform: translateY(100vh); }
+/* KALP */
+.heart{
+  position:fixed;
+  top:-60px;
+  font-size:48px;
+  animation:fall linear forwards;
 }
 
-.loveText {
-    position: absolute;
-    font-size: 24px;
-    background: hotpink;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    animation: fade 2.5s forwards;
-    z-index: 20;
-    pointer-events: none;
+/* MESAJ */
+#msg{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  padding:15px 25px;
+  font-size:26px;
+  border-radius:15px;
+  display:none;
+  z-index:1000;
+  text-align:center;
 }
 
-@keyframes fade {
-    from { opacity: 1; }
-    to { opacity: 0; transform: translateY(-40px); }
+@keyframes fall{
+  to{ transform:translateY(130vh); }
 }
 </style>
 </head>
 
 <body>
 
-<button onclick="startLove()">Buna basarsan bir şey olur 😍</button>
+<div id="start">
+  <div>BURAYA TIKLA</div>
+</div>
 
-<audio id="music" src="sarki.mp3"></audio>
+<div id="msg"></div>
 
 <script>
-const words = [
-    "Seni çok seviyorum DURUŞUMM 💖",
-    "İyi ki varsın AŞKIMMM 😍",
-    "Kalbim senin BALIMMM💕",
-    "Dünyam sensin 🌍",
-    "Gülüşüne aşığım KURBAN OLDUĞUM 😊",
-    "Sonsuza kadar biz 💞"
+const sozler=[
+  "Seni çok seviyorum AŞKIMM❤️",
+  "İyi ki varsın KURBAN OLDUĞUM😘",
+  "Kalbim senin BUSUSUMMM 💖",
+  "Hep benim ol BALIMMMM 💕",
+  "Gülüşün dünyam 🌍",
+  "Seninle her şey daha güzel 🌸",
+  "Sen benim ışığımsın ✨",
+  "Aşkımız sonsuz KURBAN OLDUĞUM💞",
+  "Kalbim hep seninle 💓",
+  "Sen benim mutluluğumsun 🥰",
+  "Sensiz bir gün düşünemem 💘",
+  "Gözlerin büyülüyor 🌟",
+  "Seninle her an özel 💖",
+  "Sen benim hayatımın anlamısın ❤️",
+  "Sana her zaman aşık olacağım 💕"
 ];
 
-function startLove() {
-    document.querySelector("button").style.display = "none";
+let started=false;
 
-    const music = document.getElementById("music");
-    music.volume = 0.7;
-    music.play();
+function kalpYagdir(){
+  const k=document.createElement("div");
+  k.className="heart";
+  k.textContent="❤️";
+  k.style.left=Math.random()*90+"vw";
+  k.style.animationDuration=(6+Math.random()*4)+"s";
 
-    setInterval(() => {
-        for (let i = 0; i < 4; i++) {
-            const heart = document.createElement("div");
-            heart.className = "heart";
-            heart.innerHTML = "💖";
-            heart.style.left = Math.random() * 90 + "vw";
-            heart.style.animationDuration = (5 + Math.random() * 3) + "s";
+  function goster(){
+    const m=document.getElementById("msg");
+    m.textContent=sozler[Math.floor(Math.random()*sozler.length)];
+    m.style.display="block";
+  }
 
-            heart.onclick = (e) => {
-                const txt = document.createElement("div");
-                txt.className = "loveText";
-                txt.innerHTML = words[Math.floor(Math.random() * words.length)];
-                txt.style.left = e.clientX + "px";
-                txt.style.top = e.clientY + "px";
-                document.body.appendChild(txt);
-                setTimeout(() => txt.remove(), 2500);
-            };
+  k.addEventListener("touchstart",goster,{passive:true});
+  k.addEventListener("click",goster);
 
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 8000);
-        }
-    }, 400);
+  document.body.appendChild(k);
+  setTimeout(()=>k.remove(),12000);
 }
+
+function baslat(){
+  if(started) return;
+  started=true;
+
+  document.getElementById("start").remove();
+
+  kalpYagdir();                 // 👈 TELEFON İÇİN KRİTİK
+  setInterval(kalpYagdir,500);
+}
+
+document.getElementById("start").addEventListener("touchstart",baslat,{passive:true});
+document.getElementById("start").addEventListener("click",baslat);
 </script>
 
 </body>
 </html>
+
